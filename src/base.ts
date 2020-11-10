@@ -12,7 +12,7 @@ export type Two = Incr<One>;
 export type Incr<N extends Unary> = [1, ...N];
 
 /** Decrements a number, or returns `never` if result would be negative. */
-export type Decr<N extends Unary | never> = N extends Incr<infer U> ? U : never;
+export type Decr<N extends Unary> = N extends Incr<infer U> ? U : never;
 
 /** Adds two numbers. */
 export type Add<N1 extends Unary, N2 extends Unary> = [...N1, ...N2];
