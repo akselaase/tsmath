@@ -45,6 +45,25 @@ export type Pow<N extends Unary, P extends Unary> = P extends Zero ? One : Mul<P
 /** Checks the parity of a number and returns `E` for even and `O` for odd. */
 export type Parity<N extends Unary, E, O> = Mod<N, Two> extends Zero ? E : O;
 
-/** Returns `Y` if `N1 < N2`, else `N`. */
-export type LT<N1 extends Unary, N2 extends Unary, Y, N> =
-    Sub<N1, N2> extends never ? Y : N;
+/** Checks whether two numbers are equal. */
+export type EQ<N1 extends Unary, N2 extends Unary> =
+    Sub<N1, N2> extends Zero ? true : false;
+
+/** Returns `true` if `N1 < N2`, else `false`. */
+export type LT<N1 extends Unary, N2 extends Unary> =
+    Sub<N1, N2> extends never ? true : false;
+
+// `A <= B  ===  !(B < A)`
+/** Returns `true` if `N1 <= N2`, else `false`. */
+export type LTE<N1 extends Unary, N2 extends Unary> =
+    LT<N2, N1> extends true ? false : true;
+
+// `A > B  === B < A
+/** Returns `true` if `N1 > N2`, else `false`. */
+export type GT<N1 extends Unary, N2 extends Unary> =
+    LT<N2, N1>;
+
+// `A >= B  === !(A < B)
+/** Returns `true` if `N1 >= N2`, else `false`. */
+export type GTE<N1 extends Unary, N2 extends Unary> =
+    LT<N1, N2> extends true ? false : true;
